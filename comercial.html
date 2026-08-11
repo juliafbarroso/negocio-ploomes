@@ -104,10 +104,10 @@ function row(label,value){
   else v='<span class="val">'+value+'</span>';
   return '<div class="frow '+(filled?'f':'')+'"><span class="chk"></span><span class="lab">'+label+'</span>'+v+'</div>';
 }
-function section(title,fields,ced){
+function section(title,fields,ced,collapsed){
   let b=''; if(fields.length===0){b='<div class="empty-sec">Nenhum campo preenchido nessa seção</div>';}
   else fields.forEach(f=>{b+=Array.isArray(f)?row(f[0],f[1]):row(f);});
-  return '<div class="sec"><div class="sec-h '+(ced?'ced':'')+'"><span>'+title+(ced?' &nbsp;<span class="badge">proposta</span>':'')+'</span><span class="r">&#8862; <span class="cv">&#9662;</span></span></div><div class="sec-b">'+b+'</div></div>';
+  return '<div class="sec'+(collapsed?' collapsed':'')+'"><div class="sec-h '+(ced?'ced':'')+'"><span>'+title+(ced?' &nbsp;<span class="badge">proposta</span>':'')+'</span><span class="r">&#8862; <span class="cv">&#9662;</span></span></div><div class="sec-b">'+b+'</div></div>';
 }
 
 const CED=[['Cedente','__CEDSELECT__'],'Tipo (autor / advogado / perito)','Créditos cedidos','% do crédito (vem da análise, editável)','Valor bruto condenação','Valor IR condenação','Outros descontos condenação','Valor depósito condenação','Abatimento condenação','Valor depósito final condenação','Valor bruto honorários','Valor IR honorários','Outros descontos honorários','Valor depósito honorários','Abatimento honorários','Valor depósito final honorários'];
@@ -147,7 +147,7 @@ const S=[
  ['&#128100; Fatima silva',[['Nome','Fatima silva'],['Telefones','chip:(21) 99969-5745'],['E-mail','fatimaaraujosilva2004@uol.com.br'],['Numero OAB','Rj058435'],'Tipo cliente','CPF']]
 ];
 
-let html=''; S.forEach(item=>{ html+=section(item[0],item[1],item[2]); });
+let html=''; let before=true; S.forEach(item=>{ if(item[0]==='Propostas') before=false; html+=section(item[0],item[1],item[2],before); });
 document.getElementById('form').innerHTML=html;
 document.querySelectorAll('#form .sec-h').forEach(h=>h.addEventListener('click',()=>h.parentElement.classList.toggle('collapsed')));
 </script>
