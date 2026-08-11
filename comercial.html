@@ -100,6 +100,7 @@ function row(label,value){
   let v; if(!filled)v='<span class="val empty">Adicionar ...</span>';
   else if(String(value).startsWith('chip:'))v='<span class="vchip">'+value.slice(5)+'</span>';
   else if(String(value).startsWith('tag:'))v='<span class="vchip tag">&#9873; '+value.slice(4)+'</span>';
+  else if(value==='__CEDSELECT__')v='<span class="val"><select style="width:100%;max-width:340px;padding:6px 9px;border:1px solid var(--line);border-radius:7px;background:#fff;font-size:12.5px"><option>+ Cadastrar cliente</option><option>João Silva (advogado)</option><option>Maria Souza (advogado)</option><option>Ana Lima (autor)</option><option>Carlos Perito (perito)</option></select></span>';
   else v='<span class="val">'+value+'</span>';
   return '<div class="frow '+(filled?'f':'')+'"><span class="chk"></span><span class="lab">'+label+'</span>'+v+'</div>';
 }
@@ -109,12 +110,11 @@ function section(title,fields,ced){
   return '<div class="sec"><div class="sec-h '+(ced?'ced':'')+'"><span>'+title+(ced?' &nbsp;<span class="badge">proposta</span>':'')+'</span><span class="r">&#8862; <span class="cv">&#9662;</span></span></div><div class="sec-b">'+b+'</div></div>';
 }
 
-const CED=['Cedente (cliente cadastrado)','Tipo (autor / advogado / perito)','Créditos cedidos','% do crédito (vem da análise, editável)','Valor bruto condenação','Valor IR condenação','Outros descontos condenação','Valor depósito condenação','Valor bruto honorários','Valor IR honorários','Outros descontos honorários','Valor depósito honorários'];
+const CED=[['Cedente','__CEDSELECT__'],'Tipo (autor / advogado / perito)','Créditos cedidos','% do crédito (vem da análise, editável)','Valor bruto condenação','Valor IR condenação','Outros descontos condenação','Valor depósito condenação','Abatimento condenação','Valor depósito final condenação','Valor bruto honorários','Valor IR honorários','Outros descontos honorários','Valor depósito honorários','Abatimento honorários','Valor depósito final honorários'];
 const REPRESENTADO=['Nome','CPF','RG','Data de nascimento','Profissão','Estado civil','Telefone','E-mail','Endereço','Número','Complemento','Bairro','Cidade','UF','CEP'];
 
 const S=[
  ['Resumo',[['Etiquetas','chip:TJSP/TJCE/TJPA - Devedor público + Fase avançada'],'Nome Parceiro','Telefone Parceiro',['Origem','Contato Direto']]],
- ['Dados Proposta',['Responsável pela proposta','Arquivo da proposta','Arquivo da proposta 2','Arquivo da proposta 3','Print calculadora','Print calculadora 2','Deságio Mínimo','Deságio Alvo','Deságio Condenação (negócio)','Deságio Honorários (negócio)','Valor Abatimento (negócio)','Incremento Risco','Incremento Registro','Prazo Liquidação','Crédito ofertado','Observações']],
  ['ICP',['Já fez antecipação antes?','Para qual finalidade é o recurso?','Você já sabe quanto precisa financeiramente?','Quanto você precisa?']],
  ['Informações Prospect/Cliente',[['Nome completo','Fatima silva'],['Tipo cliente','Advogado'],'Já é cliente?','Data última transação','Classificação de risco','Procuração pública',['Telefone','chip:(21) 99969-5745'],'Identificador WhatsApp',['E-mail','fatimaaraujosilva2004@uol.com.br'],'CPF',['Número OAB','Rj058435'],'Grupo']],
  ['Lead Score',[['Score do Lead','45 %'],['Data de Análise de Carteira','29/06/2026'],['Observação Lead Score','Prospect/cliente duplicado ou inexistente no SIJ'],['Marcadores','tag:Lead Score – Verificado']]],
@@ -130,11 +130,11 @@ const S=[
  ['Incremento de risco',[['Fazer análise clearsale?','Não'],['Resultado incremento de risco','2'],['Risco jurídico','38'],['Risco cliente','80'],['Risco cobrança','70'],['Observações incremento de risco','Planilha']]],
  ['Precificação Automática',[['Prazo estimado de liquidação calculado','14'],'Limite inferior calculado (honorários)','Deságio alvo calculado (honorários)','Deságio sugerido calculado (honorários)','ID orgão julgador - Pré-antecipar']],
  ['Negativas',['Responsável pela negativa','Houve ligação? Negativas','Negativa realizada por','Relato da negativa','O precatório possui requisitos de antecipação dos parceiros?','Ficou alguma pendência?','Data reanálise processo (Negativas)','Enviar pesquisa de satisfação? (Negativas)']],
- ['Propostas',['Responsável pela proposta','Observações da proposta','Arquivo da proposta','Print calculadora','Proposta feita por','Crédito ofertado','Proposta aprovada?','Relato da proposta','Enviar pesquisa de satisfação proposta?','Negociação envolve Deságio Flexível?','Indicação número de meses','Deságio Flexível','Particularidades da transação','Anotações sobre o cliente/negociação','Motivos de Aceite - Condenação','Motivos de Perda - Condenação']],
+ ['Propostas',['Responsável pela proposta','Proposta feita por','Observações da proposta','Arquivo da proposta','Arquivo da proposta 2','Arquivo da proposta 3','Print calculadora','Print calculadora 2','Crédito ofertado','Deságio Mínimo','Deságio Alvo','Deságio Honorários 1','Deságio Honorários 2','Deságio Condenação 1','Deságio Condenação 2','Incremento Risco','Incremento Registro','Prazo Liquidação','Negociação envolve Deságio Flexível?','Indicação número de meses','Deságio Flexível','Exceções','Proposta aprovada?','Relato da proposta','Enviar pesquisa de satisfação proposta?','Particularidades da transação','Anotações sobre o cliente/negociação','Motivos de Aceite - Condenação','Motivos de Perda - Condenação']],
  ['Cedente 1',CED,true],
  ['Cedente 2',CED,true],
  ['Cedente 3',CED,true],
- ['Valores Totais',['Valor Total (bruto)','Valor Total Condenação (bruto)','Valor Total Honorários (bruto)','Valor Total Depósito (antecipação)','Valor Total Depósito Condenação','Valor Total Depósito Honorários','Valor Total IR']],
+ ['Valores Totais',['Valor Total (bruto)','Valor Total Condenação (bruto)','Valor Total Honorários (bruto)','Valor Total IR','Valor Total Abatimento','Valor Total Depósito (antecipação)','Valor Total Depósito final']],
  ['Análise Devedor',['Motivo de perda - Análise devedor','Campos atualizados - Negativa']],
  ['Análise Jurídica',['Resultado da análise - Primeira análise','Parecer - Primeira análise','Nome do autor da causa - Primeira análise','Nome devedor 1 - Primeira análise','Qual crédito é possível antecipar? Primeira análise','Valor incontroverso dos honorários sucumbenciais - 1A','Incide imposto de renda? Primeira análise','Grau de jurisdição - Primeira análise','Tipo de devedor - Primeira análise','Etapa processual - Primeira análise']],
  ['Reanálise',['Resultado da análise - Reanálise','Parecer - Reanálise','Qual crédito é possível antecipar? Reanálise','Valor incontroverso dos honorários sucumbenciais - 2A','Etapa processual - Reanálise']],
