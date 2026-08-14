@@ -110,7 +110,7 @@ function section(title,fields,ced,collapsed){
   return '<div class="sec'+(collapsed?' collapsed':'')+'"><div class="sec-h '+(ced?'ced':'')+'"><span>'+title+(ced?' &nbsp;<span class="badge">proposta</span>':'')+'</span><span class="r">&#8862; <span class="cv">&#9662;</span></span></div><div class="sec-b">'+b+'</div></div>';
 }
 
-const CED=[['Cedente','__CEDSELECT__'],'Tipo (autor / advogado / perito)','Créditos cedidos','% condenação (fatia deste cedente)','Valor bruto condenação','Valor IR condenação','Outros descontos condenação','Valor depósito condenação','Abatimento condenação','Valor depósito final condenação','% honorários (fatia deste cedente)','Valor bruto honorários','Valor IR honorários','Outros descontos honorários','Valor depósito honorários','Abatimento honorários','Valor depósito final honorários'];
+const CED=[['Cedente','__CEDSELECT__'],'Tipo (autor / advogado / perito)','Créditos cedidos','% do cedente na condenação','Valor bruto condenação','Valor IR condenação','Outros descontos condenação','Valor depósito condenação','Abatimento condenação','Valor depósito final condenação','% do cedente nos honorários','Valor bruto honorários','Valor IR honorários','Outros descontos honorários','Valor depósito honorários','Abatimento honorários','Valor depósito final honorários'];
 const REPRESENTADO=['Nome','CPF','RG','Data de nascimento','Profissão','Estado civil','Telefone','E-mail','Endereço','Número','Complemento','Bairro','Cidade','UF','CEP'];
 
 const S=[
